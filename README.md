@@ -1,0 +1,5 @@
+![enunciado1](./img/1.jpg)
+![enunciado2](./img/2.jpg)
+![enunciado3](./img/3.jpg)
+![enunciado4](./img/4.jpg)
+![enunciado4](./img/5.jpg)
