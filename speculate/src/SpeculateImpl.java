@@ -70,14 +70,46 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 
 	@Override
 	public int temPartida(int id) throws RemoteException {
-		// TODO Auto-generated method stub
-		return 0;
+		Partida partida = dictPartidas.get(id);
+		if(partida == null) {
+			return -1;
+		}
+		
+		Jogador jogador1 = partida.getJogador1();
+		Jogador jogador2 = partida.getJogador2();
+		
+		if(jogador2 == null) {
+			return 0;
+		}
+		
+		if(jogador1.getId() == id) {
+			return 1;
+		}
+		
+		if(jogador2.getId() == id) {
+			return 2;
+		}
+		
+		return -2;
+		
 	}
 
 	@Override
 	public String obtemOponente(int id) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		Partida partida = dictPartidas.get(id);
+		if(partida != null) {
+			Jogador jogador1 = partida.getJogador1();
+			Jogador jogador2 = partida.getJogador2();
+			
+			if(jogador1.getId() == id) {
+				if(jogador2 != null) {
+					return jogador2.getNome();
+				}
+			} else {
+				return jogador1.getNome();
+			}
+		}
+		return "";
 	}
 
 	@Override
