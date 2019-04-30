@@ -6,8 +6,11 @@ import java.util.concurrent.Semaphore;
 
 public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInterface {
 	private static final long serialVersionUID = 1234L;
-	private static final int maxJogadores = 2;
-	private static Map<String, Integer> jogadores = new Hashtable<String, Integer>(maxJogadores);
+	private static final int maxJogos = 2;
+	private static final int maxJogadores = 2  * maxJogos;
+	private static Map<Integer, Partida> dictPartidas = new Hashtable<Integer, Partida>(maxJogadores);
+	private static Map<String, Jogador> jogadoresRegistrados = new Hashtable<String, Jogador>(maxJogadores);
+	private static Jogador jogadorEmEspera = null;
 	private static Semaphore semaforo = new Semaphore(1);
 	
 	protected SpeculateImpl() throws RemoteException {
@@ -25,15 +28,29 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 		try {
 			semaforo.acquire();
 			//caso o jogador já esteja cadastrado
-			if(jogadores.containsKey(nome)) {
+			if(jogadoresRegistrados.containsKey(nome)) {
 				codigoDeRetorno = -1;
 			//caso o número de jogadores esteja no limite
-			} else if(jogadores.size() == maxJogadores) {
+			} else if(jogadoresRegistrados.size() == maxJogadores) {
 				codigoDeRetorno = -2;
 			//caso esteja tudo OK para cadastrar o jogador
 			} else {
 				int id = this.getPID();
-				jogadores.put(nome, id);
+				Jogador jogador = new Jogador(id, nome);
+				//caso tenha algum jogador esperando partida
+				if(jogadorEmEspera != null) {
+					Partida partida = dictPartidas.get(jogadorEmEspera.getId());
+					partida.setJogador1(jogadorEmEspera);
+					partida.setJogador2(jogador);
+					dictPartidas.put(id, partida);
+					jogadoresRegistrados.put(nome, jogador);
+					System.out.println("Partida criada entre "+ jogadorEmEspera.getNome() +" e " + nome);
+					jogadorEmEspera = null;
+				}else {
+					jogadorEmEspera = jogador;
+					jogadoresRegistrados.put(nome, jogador);
+					dictPartidas.put(id, new Partida());
+				}
 				codigoDeRetorno = id;
 			}
 		} catch(Exception e) {
