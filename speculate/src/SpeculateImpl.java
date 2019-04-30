@@ -10,7 +10,7 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 	
 	@Override
 	public int getPID() throws RemoteException{
-		return new ProcessoID().getPID();
+		return ProcessoID.getPID();
 	}
 
 	@Override
