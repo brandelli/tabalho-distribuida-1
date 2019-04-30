@@ -1,6 +1,17 @@
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-public class SpeculateImpl implements SpeculateInterface {
+public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInterface {
+	private static final long serialVersionUID = 1234L;
+	
+	protected SpeculateImpl() throws RemoteException {
+		
+	}
+	
+	@Override
+	public int getPID() throws RemoteException{
+		return new ProcessoID().getPID();
+	}
 
 	@Override
 	public int registraJogador(String nome) throws RemoteException {

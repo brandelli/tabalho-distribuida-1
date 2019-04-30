@@ -2,6 +2,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface SpeculateInterface extends Remote {
+	public int getPID() throws RemoteException;
 	public int registraJogador(String nome) throws RemoteException;
 	public int encerraPartida(int id) throws RemoteException;
 	public int temPartida(int id) throws RemoteException;
