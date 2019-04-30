@@ -12,20 +12,22 @@ public class SpeculateClient {
 			
 			while(true) {
 				int id = -1;
-				System.out.println("Digite seu nome de usu√°rio");
-				String usuario = scanner.readLine();
-				id = speculate.registraJogador(usuario);
+				System.out.println("Digite seu nome de usu·rio");
+				String jogador = scanner.readLine();
+				id = speculate.registraJogador(jogador);
 				
 				if(id == -1) {
-					System.out.println("Nome de usu√°rio j√° cadastrado");
-					break;
+					System.out.println("Nome de usu·rio j· cadastrado");
 				} else if(id == -2) {
-					System.out.println("N√∫mero m√°ximo de jogadores j√° alcancado");
-					break;
+					System.out.println("N˙mero m·ximo de jogadores j· alcancado");
+				}else {
+					System.out.println(jogador +": "+id);
+					System.out.println("Buscando partida");
+					
+					while(true) {
+						
+					}
 				}
-				
-				System.out.println(usuario +": "+id);
-				System.out.println("Buscando partida");
 				
 			}
 			

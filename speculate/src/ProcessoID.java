@@ -5,12 +5,11 @@ public class ProcessoID {
 	private static Semaphore semaforo = new Semaphore(1);
 	
 	static int getPID() {
-		System.out.println("Static");
 		try{
 			semaforo.acquire();
 			nextID++;
 		}catch(Exception e) {
-			System.out.println("Falha no semaforo");
+			System.out.println("Falha no semaforo de criação de id de processo");
 			e.printStackTrace();
 		}finally {
 			semaforo.release();
