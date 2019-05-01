@@ -17,6 +17,10 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 		
 	}
 	
+	private Partida getPartida(int id) {
+		return dictPartidas.get(id);
+	}
+	
 	@Override
 	public int getPID() throws RemoteException{
 		return ProcessoID.getPID();
@@ -70,7 +74,7 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 
 	@Override
 	public int temPartida(int id) throws RemoteException {
-		Partida partida = dictPartidas.get(id);
+		Partida partida = this.getPartida(id);
 		if(partida == null) {
 			return -1;
 		}
@@ -96,7 +100,7 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 
 	@Override
 	public String obtemOponente(int id) throws RemoteException {
-		Partida partida = dictPartidas.get(id);
+		Partida partida = this.getPartida(id);
 		if(partida != null) {
 			Jogador jogador1 = partida.getJogador1();
 			Jogador jogador2 = partida.getJogador2();
@@ -114,8 +118,46 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 
 	@Override
 	public int ehMinhaVez(int id) throws RemoteException {
-		// TODO Auto-generated method stub
-		return 0;
+		Partida partida = this.getPartida(id);
+		
+		// jogador não encontrado em nunhuma partida
+		if(partida == null) {
+			return -1;
+		}
+		
+		// caso não tenha 2 jogadores na partida
+		if(partida.getJogador2() == null) {
+			return -2;
+		}
+		
+		// caso ainda não tenha vencedor na partida
+		if(partida.getVencedor() != null) {
+			// proxima jogada é do cliente que fez a chamada
+			if(partida.getProximaJogada().getId() == id) {
+				return 1;
+			}
+			// proxima jogada é do oponente;
+			return 0;
+		// já está definido o vencedor
+		} else {
+			Jogador vencedor = partida.getVencedor();
+			// caso o jogo tenha acabado devido a uma desistencia
+			if(partida.getDesistencia() == true) {
+				// vencedor por WO é o cliente que fez a chamada
+				if(vencedor.getId() == id) {
+					return 5;
+				}
+				// perdedor por WO é o cliente qu efez a chamada
+				return 6;
+			} else {
+				// vencedor é o cliente que fez a chamada
+				if(vencedor.getId() == id) {
+					return 2;
+				}
+				// perdedor é o cliente que fez a chamada
+				return 3;
+			}
+		}
 	}
 
 	@Override
@@ -147,5 +189,5 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 }

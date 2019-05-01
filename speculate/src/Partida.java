@@ -2,6 +2,9 @@
 public class Partida {
 	private Jogador jogador1 = null;
 	private Jogador jogador2 = null;
+	private Jogador proximaJogada = null;
+	private Jogador vencedor = null;
+	private Boolean desistencia = false;
 	public Partida() {
 		
 	}
@@ -20,5 +23,29 @@ public class Partida {
 	
 	public Jogador getJogador2() {
 		return this.jogador2;
+	}
+	
+	public void setProximaJogada(Jogador proximo) {
+		this.proximaJogada = proximo;
+	}
+	
+	public Jogador getProximaJogada() {
+		return this.proximaJogada;
+	}
+	
+	public void setVencedor(Jogador vencedor) {
+		this.vencedor = vencedor;
+	}
+	
+	public Jogador getVencedor() {
+		return this.vencedor;
+	}
+	
+	public void setDesistencia(Boolean desistencia) {
+		this.desistencia = desistencia;
+	}
+	
+	public Boolean getDesistencia() {
+		return this.desistencia;
 	}
 }
