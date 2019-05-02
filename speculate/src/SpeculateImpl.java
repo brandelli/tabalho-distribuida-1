@@ -6,7 +6,7 @@ import java.util.concurrent.Semaphore;
 
 public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInterface {
 	private static final long serialVersionUID = 1234L;
-	private static final int maxJogos = 2;
+	private static final int maxJogos = 500;
 	private static final int maxJogadores = 2  * maxJogos;
 	private static Map<Integer, Partida> dictPartidas = new Hashtable<Integer, Partida>(maxJogadores);
 	private static Map<String, Jogador> jogadoresRegistrados = new Hashtable<String, Jogador>(maxJogadores);
