@@ -85,12 +85,15 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 					partida.setDesistencia(true);
 				// partida esta sendo encerrada depois do vencedor ser definido
 				} else {
+					// caso um jogador já tenha encerrado a sua sessão, os requicios da partida são limpos
 					if(partida.getPartidaTerminada()) {
 						partidasRegistradas.remove(partida.getId());
 						System.out.println("Partida entre " + partida.getJogador1().getNome() + " e " + partida.getJogador2().getNome() + " finalizada");
+					// caso contrario, o primeiro cliente a fechar a partida indica na classe partida
 					} else {
 						partida.terminarPartida();
 					}
+					// a ligação entre jogador e partida é removida da estrutura
 					dictPartidas.remove(id);
 					String nome = "";
 					if(partida.getJogador1().getId() == id) {
@@ -98,6 +101,7 @@ public class SpeculateImpl extends UnicastRemoteObject implements SpeculateInter
 					} else {
 						nome = partida.getJogador2().getNome();
 					}
+					// o registro do jogador é removido da estrutura
 					jogadoresRegistrados.remove(nome);
 				}
 			}

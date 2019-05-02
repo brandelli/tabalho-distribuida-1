@@ -47,6 +47,7 @@ public class Partida {
 	}
 	
 	private void jogadorDesistente() {
+		// faz a verificação de qual jogador desistiu da partida
 		int id = proximaJogada.getId();
 		if(id == jogador1.getId()) {
 			this.vencedor = jogador2;
@@ -76,7 +77,6 @@ public class Partida {
 	
 	public int jogaDados() {
 		int dado = Dado.jogaDado();
-		System.out.println(dado);
 		boolean efeito = this.tabuleiro.recebeJogada(dado);
 		// verifica o efeito da jogada no tabuleiro
 		// true -> jogador recebe uma bola, porque a casa já estava ocupada
@@ -112,7 +112,9 @@ public class Partida {
 	}
 	
 	private void verificaFimTurno() {
+		// verifica se as jogadas do jogador atual acabaram
 		if(this.jogadas == 0) {
+			// se não restou nenhuma bola ele é o vencedor
 			if(this.proximaJogada.getBolas() == 0) {
 				this.vencedor = this.proximaJogada;
 			}
@@ -121,6 +123,7 @@ public class Partida {
 	}
 	
 	private void trocaProximoJogador() {
+		// muda o turno para o proximo jogador
 		int id = this.proximaJogada.getId();
 		if(jogador1.getId() == id) {
 			this.proximaJogada = jogador2;

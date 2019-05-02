@@ -27,7 +27,6 @@ public class Tabuleiro {
 	
 	public String obtemEstadoDoTabuleiro() {
 		String tabuleiro = "";
-		
 		for(int i=0;i<this.casas.length;i++) {
 			if(!this.casas[i]) {
 				tabuleiro = tabuleiro + (i + 1);
